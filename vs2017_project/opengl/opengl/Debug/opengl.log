@@ -1,0 +1,4 @@
+﻿  test.cpp
+c:\users\mikichen\desktop\opengl_learn\vs2017_project\opengl\opengl\test.cpp(16): warning C4551: 缺少参数列表的函数调用
+LINK : warning LNK4098: 
+  opengl.vcxproj -> C:\Users\mikichen\Desktop\OpenGL_Learn\vs2017_project\opengl\Debug\opengl.exe
