@@ -1,5 +1,6 @@
 ﻿  CreatWindow.cpp
   Triangle.cpp
-c:\users\yw1470\desktop\hlsl\opengl_learn\vs2017_project\opengl\opengl\triangle.cpp(78): warning C4566: 由通用字符名称“\u00EB”表示的字符不能在当前代码页(936)中表示出来
-  正在生成代码...
-  opengl.vcxproj -> C:\Users\YW1470\Desktop\hlsl\OpenGL_Learn\vs2017_project\opengl\Debug\opengl.exe
+c:\users\mikichen\documents\github\opengl_learn\vs2017_project\opengl\opengl\triangle.cpp(78): warning C4566: character represented by universal-character-name '\u00EB' cannot be represented in the current code page (936)
+  Generating Code...
+LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
+  opengl.vcxproj -> C:\Users\mikichen\Documents\GitHub\OpenGL_Learn\vs2017_project\opengl\Debug\opengl.exe
