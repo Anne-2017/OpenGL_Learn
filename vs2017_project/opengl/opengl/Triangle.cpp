@@ -121,7 +121,7 @@ int main() {
 	//由于在调用glVetexAttribPointer之前绑定的是先前定义的VBO对象，顶点属性0现在会链接到它的顶点数据。
 
 
-
+	ddddddddddddddd
 	
 	
 	
