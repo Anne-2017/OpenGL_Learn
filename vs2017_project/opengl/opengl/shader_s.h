@@ -2,11 +2,14 @@
 #define SHADER_H
 
 #include <glad/glad.h>; // 包含glad来获取所有的必须OpenGL头文件
+//#include <GLFW/glfw3.h>;
 
 #include <string>
 #include <fstream> //常用与读写文件
 #include <sstream> //产用于字符/格式转换
 #include <iostream>
+
+//using namespace std;
 
 
 class Shader
@@ -14,7 +17,7 @@ class Shader
 public:
 	// 程序ID
 	unsigned int ID;
-	// 构造器读取并构建着色器
+	//1 构造器读取并构建着色器
 	Shader(const GLchar* vertexPath, const GLchar* fragmentPath) {
 		std::string vertexCode;
 		std::string fragmentCode;
@@ -43,9 +46,21 @@ public:
 			fragmentCode = fShaderStream.str();		
 		}
 		catch (std::ifstream::failure e) {
-		
-		
+			std::cout << "Error::SHADER::file cant not read" << std::endl;
 		}
+
+		const char * vShaderCode = vertexCode.c_str();
+		const char * fShaderCode = fragmentCode.c_str();
+		//2.compile shaders
+		unsigned int vertex;
+		unsigned int fragment;
+		//vertex shader
+		vertex = glCreateShader(GL_VERTEX_SHADER);
+		glShaderSource(vertex, 1, &fShaderCode, NULL);
+		glCompileShader(vertex);
+		checkCompileErrors(vertex, "VERTEX");
+
+
 
 
 
