@@ -16,7 +16,7 @@ public:
 	// 程序ID
 	unsigned int ID;
 	//1 构造器读取并构建着色器
-	Shader(const GLchar* vertexPath, const GLchar* fragmentPath) {
+	Shader(const GLchar *vertexPath, const GLchar *fragmentPath) {
 		//string 类必须包含std内
 		std::string vertexCode;
 		string fragmentCode;

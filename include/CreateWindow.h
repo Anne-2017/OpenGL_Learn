@@ -9,13 +9,13 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow *window);
 
 
-int CreatWindow(const unsigned int SCR_WIDTH,const unsigned int SCR_HEIGHT) {
+int CreatWindow(const unsigned int SCR_WIDTH,const unsigned int SCR_HEIGHT, const GLchar *VshaderAddress, const GLchar *FshaderAddress) {
 	glfwInit();
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-	GLFWwindow * window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "learn_opengl", NULL, NULL);
+	GLFWwindow *window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "learn_opengl", NULL, NULL);
 	if (window == NULL) {
 		cout << "fail to create glfw window" << endl;
 		glfwTerminate();
@@ -36,7 +36,7 @@ int CreatWindow(const unsigned int SCR_WIDTH,const unsigned int SCR_HEIGHT) {
 
 	// build and compile our shader program
 	// ------------------------------------
-	Shader ourShader("shader.vs", "shader.fs"); //you can name your shader files however you lioke
+	Shader ourShader(&VshaderAddress , &FshaderAddress); //you can name your shader files however you like
 
 	// set up vertex data (and buffer(s)) and configure vertex attributes
 	// ------------------------------------------------------------------
