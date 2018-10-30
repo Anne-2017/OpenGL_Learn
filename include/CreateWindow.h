@@ -4,18 +4,29 @@
 #include<shader_s.h>
 #include<iostream>
 
-using namespace std;
-void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow *window);
+void framebuffer_size_callback(GLFWwindow* window, int width, int height);
+using namespace std;
 
 
-int CreatWindow(const unsigned int SCR_WIDTH,const unsigned int SCR_HEIGHT, const GLchar *VshaderAddress, const GLchar *FshaderAddress) {
+class GlobeValue{
+public :
+	GlobeValue() {}
+	float SCR_WIDTH;
+	float SCR_HEIGHT;
+
+};
+
+GlobeValue gb;
+ 
+int CreatWindow(const unsigned int SCR_WIDTH,const unsigned int SCR_HEIGHT,const GLchar *VshaderAddress,const GLchar *FshaderAddress) {
 	glfwInit();
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+	
+	GLFWwindow *window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "learn_opengl", NULL, NULL); 
 
-	GLFWwindow *window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "learn_opengl", NULL, NULL);
 	if (window == NULL) {
 		cout << "fail to create glfw window" << endl;
 		glfwTerminate();
@@ -33,11 +44,10 @@ int CreatWindow(const unsigned int SCR_WIDTH,const unsigned int SCR_HEIGHT, cons
 		return -1;
 	}
 
-
 	// build and compile our shader program
 	// ------------------------------------
-	Shader ourShader(&VshaderAddress , &FshaderAddress); //you can name your shader files however you like
-
+	Shader ourShader(VshaderAddress , FshaderAddress); //you can name your shader files however you like
+	
 	// set up vertex data (and buffer(s)) and configure vertex attributes
 	// ------------------------------------------------------------------
 	
@@ -47,8 +57,10 @@ int CreatWindow(const unsigned int SCR_WIDTH,const unsigned int SCR_HEIGHT, cons
 		-0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,  // bottom left
 		 0.0f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f   // top 
 	};
+	unsigned int VBO;
+	unsigned int VAO;
 
-	unsigned int VBO, VAO;
+
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, &VBO);
 	glBindVertexArray(VAO);
@@ -66,8 +78,7 @@ int CreatWindow(const unsigned int SCR_WIDTH,const unsigned int SCR_HEIGHT, cons
 
 	// You can unbind the VAO afterwards so other VAO calls won't accidentally modify this VAO, but this rarely happens. Modifying other
 	// VAOs requires a call to glBindVertexArray anyways so we generally don't unbind VAOs (nor VBOs) when it's not directly necessary.
-	// glBindVertexArray(0);
-
+	 glBindVertexArray(0);
 
 	// render loop
 	// -----------
@@ -87,17 +98,16 @@ int CreatWindow(const unsigned int SCR_WIDTH,const unsigned int SCR_HEIGHT, cons
 	   // -------------------------------------------------------------------------------
 		glfwSwapBuffers(window);
 		glfwPollEvents();
-
 	}
 	return 0;
 }
 
 
+void framebuffer_size_callback(GLFWwindow * window, int width, int height) {
+	glViewport(0, 0, width, height);
+}
+
 void processInput(GLFWwindow * window) {
 	if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, true);
-}
-
-void framebuffer_size_callback(GLFWwindow * window, int width, int height) {
-	glViewport(0, 0, width, height);
 }

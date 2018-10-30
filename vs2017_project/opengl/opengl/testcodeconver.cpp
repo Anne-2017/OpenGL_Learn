@@ -9,6 +9,13 @@ const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
 
 
+
+//"shaderSource/v.glsl", "shaderSource/f.glsl"
+
+
 int main() {
-	CreatWindow(SCR_WIDTH, SCR_HEIGHT,"x.d","d.c");
+	CreatWindow(SCR_WIDTH, SCR_HEIGHT,"shaderSource/v.glsl", "shaderSource/f.glsl");
+	
 }
+
+

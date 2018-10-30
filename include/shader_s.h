@@ -1,7 +1,7 @@
 #ifndef SHADER_H
 #define SHADER_H
 
-#include <glad/glad.h>; // 包含glad来获取所有的必须OpenGL头文件
+#include <glad/glad.h> // 包含glad来获取所有的必须OpenGL头文件
 //#include <GLFW/glfw3.h>;
 
 #include <string>
@@ -15,6 +15,7 @@ class Shader{
 public:
 	// 程序ID
 	unsigned int ID;
+	Shader() {};
 	//1 构造器读取并构建着色器
 	Shader(const GLchar *vertexPath, const GLchar *fragmentPath) {
 		//string 类必须包含std内
