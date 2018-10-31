@@ -8,24 +8,66 @@ void processInput(GLFWwindow *window);
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 using namespace std;
 
+template<class T>
+int length(T& arr)
+{
+	//cout << sizeof(arr[0]) << endl;
+	//cout << sizeof(arr) << endl;
+	return sizeof(arr) / sizeof(arr[0]);
+}
+
 
 class GlobeValue{
 public :
-	GlobeValue() {}
+
+	GlobeValue():data(0),dataLen(0){}
 	float SCR_WIDTH;
 	float SCR_HEIGHT;
+	float * data ;
+	int dataLen;
 
+	virtual ~GlobeValue()
+	{
+		 printf("delete a \n");
+		if (data != 0)
+		{
+			delete[] data;
+			data = 0;
+		}
+	}
+
+	//float arr[gb.size];
 };
 
-GlobeValue gb;
+class B: public GlobeValue
+{
+public:
+
+	B() : GlobeValue()
+	{
+
+	}
+	~B()
+	{
+		printf("delete b \n");
+	}
+};
+
+extern GlobeValue globalValue;
+
  
+
 int CreatWindow(const unsigned int SCR_WIDTH,const unsigned int SCR_HEIGHT,const GLchar *VshaderAddress,const GLchar *FshaderAddress) {
+	printf("--------------------\n");
+	GlobeValue *pB = new B();
+	delete pB;
+	printf("--------------------\n");
 	glfwInit();
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 	
-	GLFWwindow *window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "learn_opengl", NULL, NULL); 
+	GLFWwindow *window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "opengl", NULL, NULL); 
 
 	if (window == NULL) {
 		cout << "fail to create glfw window" << endl;
@@ -50,13 +92,8 @@ int CreatWindow(const unsigned int SCR_WIDTH,const unsigned int SCR_HEIGHT,const
 	
 	// set up vertex data (and buffer(s)) and configure vertex attributes
 	// ------------------------------------------------------------------
-	
-	float vertices[] = {
-		// positions         // colors
-		 0.5f, -0.5f, 0.0f,  1.0f, 0.0f, 0.0f,  // bottom right
-		-0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,  // bottom left
-		 0.0f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f   // top 
-	};
+
+
 	unsigned int VBO;
 	unsigned int VAO;
 
@@ -66,7 +103,7 @@ int CreatWindow(const unsigned int SCR_WIDTH,const unsigned int SCR_HEIGHT,const
 	glBindVertexArray(VAO);
 
 	glBindBuffer(GL_ARRAY_BUFFER,VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, globalValue.dataLen, globalValue.data, GL_STATIC_DRAW);
 
 
 	// position attribute

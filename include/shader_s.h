@@ -41,9 +41,23 @@ public:
 			//close file handlers
 			vShaderFile.close();
 			fShaderFile.close();
+
+			std::string sliper = "CG_FRAGMENT_SHADER";
+			std::string stringData = fShaderStream.str();
+			int sliperLen = sliper.size();
+			int id = stringData.find(sliper);
+
+			if (id < 0)
+			{
+				printf("can not found  sliper");
+				return;
+			}
+			vertexCode = stringData.substr(0, id);
+			fragmentCode = stringData.substr(id + sliperLen);
+
 			//conver stream into stream
-			vertexCode = vShaderStream.str();
-			fragmentCode = fShaderStream.str();		
+			//vertexCode = vShaderStream.str();
+			//fragmentCode = fShaderStream.str();		
 		}
 		catch (ifstream::failure e) {
 			cout << "Error::SHADER::file cant not read" << endl;
@@ -51,6 +65,9 @@ public:
 
 		const char * vShaderCode = vertexCode.c_str();
 		const char * fShaderCode = fragmentCode.c_str();
+
+		cout << "vertex shader\n" << vShaderCode << endl;
+		cout << "fragment shader\n" << fShaderCode << endl;
 		//2.compile shaders
 		unsigned int vertex;
 		unsigned int fragment;
