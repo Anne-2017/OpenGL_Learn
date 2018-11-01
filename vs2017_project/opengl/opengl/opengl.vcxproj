@@ -97,8 +97,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>C:\Users\mikichen\Documents\GitHub\OpenGL_Learn\include;C:\Users\YW1470\Desktop\hlsl\OpenGL_Learn\include;C:\Users\mikichen\Desktop\OpenGL_Learn\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\mikichen\Documents\GitHub\OpenGL_Learn\lib;C:\Users\YW1470\Desktop\hlsl\OpenGL_Learn\lib;C:\Users\mikichen\Desktop\OpenGL_Learn\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\YW1470\Desktop\openglLearn\include;C:\Users\mikichen\Documents\GitHub\OpenGL_Learn\include;C:\Users\YW1470\Desktop\hlsl\OpenGL_Learn\include;C:\Users\mikichen\Desktop\OpenGL_Learn\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\YW1470\Desktop\openglLearn\lib;C:\Users\mikichen\Documents\GitHub\OpenGL_Learn\lib;C:\Users\YW1470\Desktop\hlsl\OpenGL_Learn\lib;C:\Users\mikichen\Desktop\OpenGL_Learn\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <IncludePath>C:\Users\YW1470\Desktop\hlsl\OpenGL_Learn\include;C:\Users\YW1470\Desktop\hlsl\OpenGL_Learn\include;$(IncludePath)</IncludePath>
@@ -188,8 +188,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\glad.c" />
-    <ClCompile Include="CreatWindow.cpp" />
-    <ClCompile Include="Triangle.cpp" />
+    <ClCompile Include="testcodeconver.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\include\CreateWindow.h" />
+    <ClInclude Include="..\..\..\include\shader_s.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

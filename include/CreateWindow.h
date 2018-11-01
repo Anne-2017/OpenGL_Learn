@@ -25,6 +25,7 @@ public :
 	float SCR_HEIGHT;
 	float * data ;
 	int dataLen;
+	const GLchar *vertexPath;
 
 	virtual ~GlobeValue()
 	{
@@ -57,7 +58,7 @@ extern GlobeValue globalValue;
 
  
 
-int CreatWindow(const unsigned int SCR_WIDTH,const unsigned int SCR_HEIGHT,const GLchar *VshaderAddress,const GLchar *FshaderAddress) {
+int CreatWindow(const unsigned int SCR_WIDTH,const unsigned int SCR_HEIGHT) {
 	printf("--------------------\n");
 	GlobeValue *pB = new B();
 	delete pB;
@@ -88,7 +89,7 @@ int CreatWindow(const unsigned int SCR_WIDTH,const unsigned int SCR_HEIGHT,const
 
 	// build and compile our shader program
 	// ------------------------------------
-	Shader ourShader(VshaderAddress , FshaderAddress); //you can name your shader files however you like
+	Shader ourShader(globalValue.vertexPath); //you can name your shader files however you like
 	
 	// set up vertex data (and buffer(s)) and configure vertex attributes
 	// ------------------------------------------------------------------
@@ -96,26 +97,42 @@ int CreatWindow(const unsigned int SCR_WIDTH,const unsigned int SCR_HEIGHT,const
 
 	unsigned int VBO;
 	unsigned int VAO;
+	unsigned int EBO;
 
 
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, &VBO);
+	glGenBuffers(1, &EBO);
 	glBindVertexArray(VAO);
+	
+
+    unsigned int indices[] = { // 注意索引从0开始! 
+	0, 1, 3, // 第一个三角形
+	1, 2, 3  // 第二个三角形
+	};
+	
 
 	glBindBuffer(GL_ARRAY_BUFFER,VBO);
 	glBufferData(GL_ARRAY_BUFFER, globalValue.dataLen, globalValue.data, GL_STATIC_DRAW);
 
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
+
 
 	// position attribute
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
 	// color attribute
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
 	glEnableVertexAttribArray(1);
+	
 
+	//销毁解绑buffer
 	// You can unbind the VAO afterwards so other VAO calls won't accidentally modify this VAO, but this rarely happens. Modifying other
 	// VAOs requires a call to glBindVertexArray anyways so we generally don't unbind VAOs (nor VBOs) when it's not directly necessary.
-	 glBindVertexArray(0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindVertexArray(0);
 
 	// render loop
 	// -----------
@@ -125,12 +142,14 @@ int CreatWindow(const unsigned int SCR_WIDTH,const unsigned int SCR_HEIGHT,const
 		//input 
 		processInput(window);
 		//render
+		
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 		//render the triangle
 		ourShader.use();
 		glBindVertexArray(VAO);
-		glDrawArrays(GL_TRIANGLES,0, 3);
+		//glDrawArrays(GL_TRIANGLES,0, 3);
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
 	   // -------------------------------------------------------------------------------
 		glfwSwapBuffers(window);

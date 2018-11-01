@@ -6,3 +6,8 @@
 *.pdb
 *.obj
 *.obj
+*.filters
+*.pdb
+*.idb
+*.idb
+*.obj

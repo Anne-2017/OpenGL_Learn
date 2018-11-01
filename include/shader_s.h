@@ -17,7 +17,7 @@ public:
 	unsigned int ID;
 	Shader() {};
 	//1 构造器读取并构建着色器
-	Shader(const GLchar *vertexPath, const GLchar *fragmentPath) {
+	Shader(const GLchar *vertexPath) {
 		//string 类必须包含std内
 		std::string vertexCode;
 		string fragmentCode;
@@ -26,24 +26,22 @@ public:
 		// ensure ifstream objects can throw exceptions: 确保ifstream能抛出异常 
 		//failbit 输入输出流出现非致命错误，可换回 / badbit 输入输出流出现致命错误，不可换回 / eofbit 已经到达文件尾 / goodbit /流状态完全正常
 		vShaderFile.exceptions(ifstream::failbit | ifstream::badbit);
-		fShaderFile.exceptions(ifstream::failbit | ifstream::badbit);
+		//fShaderFile.exceptions(ifstream::failbit | ifstream::badbit);
 
 		try {
 			//open file
 			vShaderFile.open(vertexPath);
-			fShaderFile.open(fragmentPath);
-			std::stringstream vShaderStream;
-			std::stringstream fShaderStream;
+			//fShaderFile.open(fragmentPath);
+			stringstream vShaderStream;
+			//std::stringstream fShaderStream;
 			// read file buffer contents into streams 我们使用STL编程的时候有时候会想到把一个流对象指向的内容用另一个流对象来输出，比如想把一个文件的内容输出到显示器上，我们可以用简单的两行代码就可以完成。 ifstream infile("test.txt");
             //如cout << infile.rdbuf();
 			vShaderStream << vShaderFile.rdbuf();
-			fShaderStream << fShaderFile.rdbuf();
-			//close file handlers
-			vShaderFile.close();
-			fShaderFile.close();
 
-			std::string sliper = "CG_FRAGMENT_SHADER";
-			std::string stringData = fShaderStream.str();
+
+			string sliper = "CG_FRAGMENT_SHADER";
+			string stringData = vShaderStream.str();
+
 			int sliperLen = sliper.size();
 			int id = stringData.find(sliper);
 
@@ -54,10 +52,16 @@ public:
 			}
 			vertexCode = stringData.substr(0, id);
 			fragmentCode = stringData.substr(id + sliperLen);
+		
 
 			//conver stream into stream
 			//vertexCode = vShaderStream.str();
 			//fragmentCode = fShaderStream.str();		
+			//fShaderStream << fShaderFile.rdbuf();
+			//close file handlers
+			vShaderFile.close();
+			//fShaderFile.close();
+
 		}
 		catch (ifstream::failure e) {
 			cout << "Error::SHADER::file cant not read" << endl;
